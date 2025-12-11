@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@layer theme {
+  :root {
+    --color-background: #e5e5e5;
+    --color-surface: #ffffff;
+    --color-text: #0f0f0f;
+    --color-primary: #999999;
+    --color-secondary: #cccccc;
+    --color-accent: #ffffff;
+  }
+  
+  .dark {
+    --color-background: #0f0f0f;
+    --color-surface: #1a1a1a;
+    --color-text: #fafafa;
+  }
+}
+
+/* Custom utility classes for backwards compatibility */
+@layer utilities {
+  .bg-background {
+    background-color: var(--color-background);
+  }
+  
+  .dark\:bg-background-dark {
+    .dark & {
+      background-color: #0f0f0f;
+    }
+  }
+  
+  .bg-text {
+    background-color: var(--color-text);
+  }
+  
+  .dark\:bg-white {
+    .dark & {
+      background-color: #ffffff;
+    }
+  }
+  
+  .text-text {
+    color: var(--color-text);
+  }
+  
+  .dark\:text-text {
+    .dark & {
+      color: #0f0f0f;
+    }
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .dark\:text-white {
+    .dark & {
+      color: #ffffff;
+    }
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .dark\:bg-\[\#1A1A1A\] {
+    .dark & {
+      background-color: #1a1a1a;
+    }
+  }
+  
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  
+  .hover\:bg-text:hover {
+    background-color: var(--color-text);
+  }
+  
+  .dark\:hover\:bg-white:hover {
+    .dark & {
+      background-color: #ffffff;
+    }
+  }
+  
+  .hover\:text-white:hover {
+    color: #ffffff;
+  }
+  
+  .dark\:hover\:text-black:hover {
+    .dark & {
+      color: #000000;
+    }
+  }
+  
+  .dark\:text-background {
+    .dark & {
+      color: #0f0f0f;
+    }
+  }
+  
+  .text-background {
+    color: var(--color-background);
+  }
+}
