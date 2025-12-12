@@ -21,12 +21,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     if (savedLang) setLanguage(savedLang);
 
     const savedTheme = localStorage.getItem('theme') as Theme;
+    const htmlElement = document.documentElement;
+    
+    // 移除 light 和 dark class，重新設置
+    htmlElement.classList.remove('light', 'dark');
+    
     if (savedTheme) {
       setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      if (savedTheme === 'dark') {
+        htmlElement.classList.add('dark');
+      } else {
+        htmlElement.classList.add('light');
+      }
     } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setTheme('dark');
-      document.documentElement.classList.add('dark');
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.add('light');
     }
   }, []);
 
@@ -39,7 +50,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark');
+    
+    const htmlElement = document.documentElement;
+    // 移除所有主題 class，然後添加正確的 class
+    htmlElement.classList.remove('light', 'dark');
+    htmlElement.classList.add(newTheme);
   };
 
   // Helper to get string based on current language

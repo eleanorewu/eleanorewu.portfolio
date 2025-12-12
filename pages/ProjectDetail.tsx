@@ -29,7 +29,7 @@ const ProjectDetail: React.FC = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  if (!project) return <div>Project not found</div>;
+  if (!project) return <div className="min-h-screen bg-background dark:bg-background-dark text-text dark:text-white flex items-center justify-center">Project not found</div>;
 
   return (
     <div ref={container} className="min-h-screen bg-background dark:bg-background-dark text-text dark:text-white">
@@ -66,7 +66,7 @@ const ProjectDetail: React.FC = () => {
              <Magnetic>
                 <button 
                     onClick={() => navigate('/')}
-                    className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center hover:bg-primary hover:text-white transition-colors shadow-lg"
+                    className="w-14 h-14 rounded-full bg-white dark:bg-gray-800 text-black dark:text-white flex items-center justify-center hover:bg-primary hover:text-white transition-colors shadow-lg"
                 >
                     <ArrowLeft size={24} />
                 </button>
@@ -102,19 +102,19 @@ const ProjectDetail: React.FC = () => {
          <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
              {/* Main Content */}
              <div className="md:col-span-7 lg:col-span-8">
-                 <h2 className="text-xl font-bold mb-8 uppercase tracking-widest border-b border-gray-200 dark:border-gray-800 pb-4">
+                 <h2 className="text-xl font-bold mb-8 uppercase tracking-widest border-b border-gray-300 dark:border-gray-700 pb-4 text-text dark:text-white">
                      {t({en: 'Overview', zh: '專案概覽'})}
                  </h2>
-                 <p className="text-xl md:text-2xl leading-relaxed font-light mb-16 text-gray-600 dark:text-gray-300">
+                 <p className="text-xl md:text-2xl leading-relaxed font-light mb-16 text-gray-800 dark:text-gray-200">
                      {t(project.description)}
                  </p>
                  
                  <div className="space-y-12">
-                     <h3 className="text-xl font-bold uppercase tracking-widest">{t({en: 'Highlights', zh: '專案亮點'})}</h3>
+                     <h3 className="text-xl font-bold uppercase tracking-widest text-text dark:text-white">{t({en: 'Highlights', zh: '專案亮點'})}</h3>
                      <div className="grid gap-8">
                         {t(project.details).map((detail: string, i: number) => (
-                            <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800">
-                                <span className="text-primary font-bold text-sm mb-4 block">0{i + 1}</span>
+                            <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-200 dark:border-gray-700">
+                                <span className="text-text dark:text-white font-bold text-sm mb-4 block">0{i + 1}</span>
                                 <p className="text-lg text-gray-700 dark:text-gray-200">{detail}</p>
                             </div>
                         ))}
@@ -124,16 +124,16 @@ const ProjectDetail: React.FC = () => {
 
              {/* Sidebar Info */}
              <div className="md:col-span-5 lg:col-span-4 space-y-12 sticky top-24 h-fit">
-                 <div className="bg-gray-100 dark:bg-gray-900 rounded-3xl p-8">
+                 <div className="bg-[#1C1D20] dark:bg-gray-900 rounded-3xl p-8">
                      <div className="mb-8">
-                         <span className="block text-xs text-gray-500 uppercase tracking-widest mb-2">Role</span>
-                         <p className="text-lg font-medium">{t(project.role)}</p>
+                         <span className="block text-xs text-gray-400 dark:text-gray-400 uppercase tracking-widest mb-2">Role</span>
+                         <p className="text-lg font-medium text-white dark:text-white">{t(project.role)}</p>
                      </div>
                      <div className="mb-8">
-                         <span className="block text-xs text-gray-500 uppercase tracking-widest mb-2">Tech Stack</span>
+                         <span className="block text-xs text-gray-400 dark:text-gray-400 uppercase tracking-widest mb-2">Tech Stack</span>
                          <div className="flex flex-wrap gap-2">
                             {project.techStack.map(tech => (
-                                <span key={tech} className="bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+                                <span key={tech} className="bg-gray-800 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm text-gray-200 dark:text-gray-200 border border-gray-700 dark:border-gray-600">
                                     {tech}
                                 </span>
                             ))}
@@ -141,7 +141,7 @@ const ProjectDetail: React.FC = () => {
                      </div>
                      {project.link && (
                          <a href={project.link} target="_blank" rel="noreferrer" className="block w-full">
-                             <button className="w-full bg-primary text-white py-4 rounded-full font-bold text-lg hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                             <button className="w-full bg-primary dark:bg-primary text-white py-4 rounded-full font-bold text-lg hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
                                 {t({en: 'Visit Live Site', zh: '訪問網站'})} <ExternalLink size={20} />
                              </button>
                          </a>
@@ -152,13 +152,13 @@ const ProjectDetail: React.FC = () => {
       </div>
       
       {/* Next Project Navigation */}
-      <div className="w-full bg-[#1C1D20] text-white py-32 rounded-t-[3rem] relative overflow-hidden flex flex-col items-center justify-center text-center">
-            <p className="text-sm uppercase tracking-widest text-gray-500 mb-8">{t({en: 'Next Case', zh: '下一個案例'})}</p>
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-12 relative z-10">{nextProject.title}</h2>
+      <div className="w-full bg-gray-100 dark:bg-[#1C1D20] py-32 rounded-t-[3rem] relative overflow-hidden flex flex-col items-center justify-center text-center">
+            <p className="text-sm uppercase tracking-widest text-gray-600 dark:text-gray-400 mb-8">{t({en: 'Next Case', zh: '下一個案例'})}</p>
+            <h2 className="text-5xl md:text-7xl font-display font-bold mb-12 relative z-10 text-text dark:text-white">{nextProject.title}</h2>
             <Magnetic>
                 <button 
                     onClick={() => navigate(`/project/${nextProject.id}`)}
-                    className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-primary text-white text-xl font-medium flex items-center justify-center hover:scale-110 transition-transform duration-500 relative z-10"
+                    className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-primary dark:bg-primary text-white text-xl font-medium flex items-center justify-center hover:scale-110 transition-transform duration-500 relative z-10"
                 >
                     {t({en: 'View', zh: '查看'})}
                 </button>
