@@ -43,7 +43,7 @@ const MarqueeParallax: React.FC<MarqueeParallaxProps> = ({
             }}
           >
             <span 
-              className="text-[15vw] md:text-[12vw] font-display font-bold text-text dark:text-white tracking-tighter inline-block" 
+              className="text-[15vw] md:text-[12vw] font-display font-bold text-white tracking-tighter inline-block" 
               style={{ 
                 display: 'inline-block',
                 verticalAlign: 'baseline',

@@ -12,10 +12,9 @@ import BackToTop from '../components/BackToTopButton';
 gsap.registerPlugin(ScrollTrigger);
 
 const Home: React.FC = () => {
-  const { t } = useApp();
+  const { t, theme } = useApp();
   const container = useRef(null);
   const heroImageRef = useRef<HTMLDivElement>(null);
-  const heroTextRef = useRef<HTMLDivElement>(null);
   
   // Parallax Text
   const { scrollYProgress } = useScroll({
@@ -26,105 +25,44 @@ const Home: React.FC = () => {
   const xMove = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const xMoveReverse = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
-  // GSAP Parallax animations
-  useEffect(() => {
-    if (!heroImageRef.current || !heroTextRef.current) return;
-
-    // Hero image parallax
-    gsap.to(heroImageRef.current, {
-      y: 100,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroImageRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-
-    // Hero text parallax
-    gsap.to(heroTextRef.current, {
-      y: -50,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroTextRef.current,
-        start: 'top center',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-  }, []);
+  // GSAP Parallax animations - 已移除圖片視差動畫，圖片固定在底部
 
   return (
     <div ref={container} className="bg-background dark:bg-background-dark min-h-screen cursor-default transition-colors duration-500">
       
       {/* --- HERO --- */}
-      <section className="min-h-screen md:h-screen flex flex-col justify-center item-center relative py-20 md:py-0" style={{ overflow: 'visible' }}>
-        <div className="px-6 md:px-12 pb-8 md:pb-20">
-            <div className="container mx-auto w-full">
-                <div className="flex flex-col md:flex-row gap-8 md:gap-24 items-center">
-                
-                {/* Hero Image (Rounded & Asymmetric) */}
-                <motion.div 
-                    ref={heroImageRef}
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-                    className="w-10/12 md:w-5/12 aspect-[3/4] md:aspect-[4/5] bg-gray-300 dark:bg-gray-700 rounded-[2.5rem] overflow-hidden relative"
-                >
-                    <img src="https://picsum.photos/id/64/800/1200" alt="Eleanore Wu" className="w-full h-full object-cover" />
-                    <div className="absolute bottom-6 left-6 bg-white/90 dark:bg-black/70 backdrop-blur px-6 py-3 rounded-full flex items-center gap-3">
-                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <span className="text-sm font-medium text-text dark:text-white">Located in Taipei</span>
-                    </div>
-                </motion.div>
-
-                {/* Hero Text */}
-                <div className="w-full md:w-7/12 flex flex-col justify-between py-4">
-                     <div className="hidden md:flex justify-end items-start mb-8">
-                         <span className="text-lg md:text-xl font-medium text-text dark:text-white text-right">
-                             {t({en: 'Freelance', zh: '自由接案'})}<br/>
-                             {t({en: 'Designer & Developer', zh: '設計與前端工程'})}
-                         </span>
-                     </div>
-                     
-                     <div className="mt-4 md:mt-0 relative z-10 px-8 md:px-0" ref={heroTextRef}>
-                        <motion.h1 
-                            initial={{ y: 100, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 1, delay: 0.3, ease: [0.76, 0, 0.24, 1] }}
-                            className="text-[12vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-display font-bold text-text dark:text-white uppercase -ml-1 md:-ml-2 tracking-tighter"
-                        >
-                            Eleanore<br/>
-                            Wu
-                        </motion.h1>
-                        
-                        {/* 手機版職業標題 */}
-                        <motion.div 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                            className="md:hidden mt-2 text-xs font-medium text-gray-600 dark:text-gray-400"
-                        >
-                            {t({en: 'Freelance', zh: '自由接案'})} ·{' '}
-                            {t({en: 'Designer & Developer', zh: '設計與前端工程'})}
-                        </motion.div>
-                        
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
-                            className="text-xs md:text-xl text-gray-600 dark:text-gray-400 mt-3 md:mt-8 max-w-md leading-relaxed"
-                        >
-                            {t({
-                                en: "Helping brands to stand out in the digital era.",
-                                zh: "協助品牌在數位時代脫穎而出。"
-                            })}
-                        </motion.p>
-                     </div>
-                </div>
-                </div>
-            </div>
+      <section 
+        className="h-[75vh] md:h-[85vh] lg:h-screen relative" 
+        style={{ 
+          overflow: 'visible',
+          background: theme === 'dark' 
+            ? 'linear-gradient(180deg, #272727 0%, #E5E5E5 100%)'
+            : 'linear-gradient(180deg, #E5E5E5 0%, #4B4B4B 100%)',
+          padding: 0,
+          margin: 0
+        }}
+      >
+        {/* Hero Image - Centered and Bottom Aligned */}
+        <div 
+            ref={heroImageRef}
+            className="absolute w-[300px] md:w-[480px] lg:w-[600px] aspect-[2/3] md:aspect-[4/5] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden"
+            style={{ 
+              left: '50%',
+              bottom: 0,
+              transform: 'translateX(-50%)',
+              marginBottom: 0,
+              padding: 0,
+              zIndex: 20
+            }}
+        >
+            <motion.img 
+                src="/src/assets/imgs/hero.png" 
+                alt="Eleanore Wu" 
+                className="w-full h-full object-cover object-bottom"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+            />
         </div>
         
         {/* Marquee at bottom of Hero */}

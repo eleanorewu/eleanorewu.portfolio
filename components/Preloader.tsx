@@ -50,7 +50,7 @@ const Preloader: React.FC<PreloaderProps> = ({ setIsLoading }) => {
           onStart: () => setCurrentIndex(index)
         })
         .to(textRef.current, {
-          duration: 0.8
+          duration: 0.6
         });
       }
     });
@@ -79,7 +79,7 @@ const Preloader: React.FC<PreloaderProps> = ({ setIsLoading }) => {
       <div className="relative">
         <h1
           ref={textRef}
-          className="text-[10vw] md:text-[8vw] font-display font-bold text-white text-center"
+          className="text-[5vw] md:text-[3vw] font-display font-bold text-white text-center"
           style={{ opacity: 0, transform: 'translateY(20px)' }}
         >
           {greetings[currentIndex]}

@@ -8,6 +8,7 @@ import { Moon, Sun } from 'lucide-react';
 const Navbar: React.FC = () => {
   const { t, theme, toggleTheme, language, setLanguage } = useApp();
   const [isActive, setIsActive] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,6 +23,20 @@ const Navbar: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [isActive]);
+
+  // 滾動事件監聽，當滾動50px時顯示 border
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: { en: 'About', zh: '關於' }, path: '/#about' },
@@ -58,44 +73,73 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full px-6 py-6 md:px-12 md:py-8 z-[60] flex justify-between items-center pointer-events-none">
+      <div className="fixed top-5 left-0 w-full z-[60] flex justify-center pointer-events-none px-5">
+        <div className={`w-full max-w-[1280px] h-[72px] px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
+          isScrolled ? 'rounded-full backdrop-blur-md' : ''
+        }`}>
         {/* Logo - Acts as Home Button */}
         <div 
             onClick={() => navigate('/')}
-            className="cursor-pointer flex items-center gap-1 group text-text dark:text-white relative pointer-events-auto"
+            className="cursor-pointer flex items-center gap-1 group text-text dark:text-white relative pointer-events-auto h-[24px]"
         >
           {/* Copyright Symbol with Rotation */}
-          <span className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-180">
+          <span 
+            className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-180"
+            style={{
+                 fontFamily: "'Josefin Sans', sans-serif",
+                 fontSize: "20px",
+                 lineHeight: "130%",
+                 letterSpacing: "-0.72px"
+            }}>
             ©
           </span>
           
           {/* Text Container with Slide Effect */}
-          <div className="relative overflow-hidden h-6 flex items-center text-base min-w-[180px]">
-             <span className="group-hover:-translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] block font-medium whitespace-nowrap">
-               Eleanore
+          <div className="relative overflow-hidden h-[20px] flex items-center min-w-[180px]">
+             <span 
+               className="group-hover:-translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] block font-semibold whitespace-nowrap"
+               style={{
+                 fontFamily: "'Josefin Sans', sans-serif",
+                 fontSize: "20px",
+                 lineHeight: "100%",
+                 letterSpacing: "-0.72px"
+               }}
+             >
+               Eleanore Wu
              </span>
-             <span className="absolute top-full group-hover:-translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] block font-medium whitespace-nowrap">
+             <span 
+               className="mt-1 absolute top-full group-hover:-translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] block font-semibold whitespace-nowrap"
+               style={{
+                 fontFamily: "'Josefin Sans', sans-serif",
+                 fontSize: "20px",
+                 lineHeight: "100%",
+                 letterSpacing: "-0.72px"
+               }}
+             >
                Portfolio Website
              </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 pointer-events-auto">
+        <div className="flex items-center gap-2 pointer-events-auto">
              {/* Desktop Navigation Links */}
-             <nav className="hidden lg:flex items-center gap-8 mr-8">
+             <nav className="hidden lg:flex items-center gap-4 mr-4">
                 {navLinks.map((link, index) => (
                   <button
                     key={index}
                     onClick={() => handleNavClick(link.path)}
-                    className="text-base font-medium text-text dark:text-white hover:text-gray-600 dark:hover:text-gray-400 hover:bg-text/5 dark:hover:bg-white/5 px-4 py-2 rounded-full transition-all duration-200 active:scale-95"
+                    className="text-base font-medium text-text dark:text-white px-2 py-1 relative group/link"
                   >
-                    {t(link.name)}
+                    <span className="relative pb-1">
+                      {t(link.name)}
+                      <span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-text dark:bg-white transition-all duration-300 ease-out group-hover/link:w-full" />
+                    </span>
                   </button>
                 ))}
              </nav>
 
              {/* Theme & Lang Toggles */}
-             <div className="hidden lg:flex items-center gap-2 mr-4">
+             <div className="hidden lg:flex items-center gap-2 mr-2">
                 <Magnetic>
                     <button 
                       onClick={toggleTheme} 
@@ -127,6 +171,7 @@ const Navbar: React.FC = () => {
                 </div>
             </button>
             </Magnetic>
+        </div>
         </div>
       </div>
 
