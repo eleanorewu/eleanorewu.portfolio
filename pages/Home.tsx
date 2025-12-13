@@ -4,9 +4,18 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useApp } from '../context/AppContext';
 import { PROJECTS } from '../constants';
-import ProjectCard from '../components/ProjectCard';
+import { ProjectShowcase } from '../components/ProjectShowcase';
 import MarqueeParallax from '../components/MarqueeParallax';
 import BackToTop from '../components/BackToTopButton';
+import Gallery from '../components/Gallery';
+import Gallery01 from '../src/assets/imgs/Gallery01.png';
+import Gallery02 from '../src/assets/imgs/Gallery02.png';
+import Gallery03 from '../src/assets/imgs/Gallery03.png';
+import Gallery04 from '../src/assets/imgs/Gallery04.png';
+import Gallery05 from '../src/assets/imgs/Gallery05.png';
+import Gallery06 from '../src/assets/imgs/Gallery06.png';
+import Gallery07 from '../src/assets/imgs/Gallery07.png';
+import Gallery08 from '../src/assets/imgs/Gallery08.png';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -24,6 +33,18 @@ const Home: React.FC = () => {
 
   const xMove = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const xMoveReverse = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
+  // Gallery items - 8 images
+  const galleryItems = [
+    { id: 1, image: Gallery01, alt: 'Gallery Image 1' },
+    { id: 2, image: Gallery02, alt: 'Gallery Image 2' },
+    { id: 3, image: Gallery03, alt: 'Gallery Image 3' },
+    { id: 4, image: Gallery04, alt: 'Gallery Image 4' },
+    { id: 5, image: Gallery05, alt: 'Gallery Image 5' },
+    { id: 6, image: Gallery06, alt: 'Gallery Image 6' },
+    { id: 7, image: Gallery07, alt: 'Gallery Image 7' },
+    { id: 8, image: Gallery08, alt: 'Gallery Image 8' },
+  ];
 
   // GSAP Parallax animations - 已移除圖片視差動畫，圖片固定在底部
 
@@ -72,7 +93,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* --- ABOUT --- */}
-      <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white dark:bg-[#1A1A1A] rounded-t-[3rem] relative" style={{ zIndex: 5 }}>
+      <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white dark:bg-[#1A1A1A] rounded-t-[3rem] relative mt-0" style={{ zIndex: 5 }}>
          <div className="container mx-auto flex flex-col md:flex-row gap-16">
              <div className="md:w-1/3">
                  <span className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-600 border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2">
@@ -103,22 +124,21 @@ const Home: React.FC = () => {
       </section>
 
       {/* --- WORK --- */}
-      <section id="work" className="py-24 px-6 md:px-12 bg-background dark:bg-background-dark">
+      <section id="work" className="py-16 md:py-24 px-6 md:px-12 bg-background dark:bg-background-dark">
         <div className="container mx-auto">
              <div className="mb-16 flex items-end justify-between px-2">
-                 <h2 className="text-sm uppercase tracking-widest text-gray-500">{t({en: 'Recent Work', zh: '近期作品'})}</h2>
+                 <h2 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400">{t({en: 'Recent Work', zh: '近期作品'})}</h2>
              </div>
              
-             <div className="flex flex-col">
-                {PROJECTS.map((project, index) => (
-                    <ProjectCard key={project.id} project={project} index={index} />
-                ))}
-             </div>
+             <ProjectShowcase />
         </div>
       </section>
 
+      {/* --- GALLERY --- */}
+      <Gallery items={galleryItems} />
+
       {/* --- SCROLLING TEXT --- */}
-      <section className="py-24 overflow-hidden bg-transparent border-t border-gray-300 dark:border-gray-800">
+      <section className="py-16 md:py-24 overflow-hidden bg-transparent border-t border-gray-300 dark:border-gray-800">
           <motion.div 
             style={{ x: xMove }}
             className="flex whitespace-nowrap"
@@ -179,7 +199,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* --- FOOTER --- */}
-      <section id="contact" className="py-24 px-6 md:px-12 bg-[#0F0F0F] text-white rounded-t-[3rem] relative overflow-hidden">
+      <section id="contact" className="py-16 md:py-24 px-6 md:px-12 bg-[#0F0F0F] text-white rounded-t-[3rem] relative overflow-hidden">
           <div className="container mx-auto relative z-10 flex flex-col items-center justify-center min-h-[60vh]">
               <motion.div 
                 style={{ y: xMoveReverse }} 

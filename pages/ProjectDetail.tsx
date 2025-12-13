@@ -102,10 +102,10 @@ const ProjectDetail: React.FC = () => {
          <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
              {/* Main Content */}
              <div className="md:col-span-7 lg:col-span-8">
-                 <h2 className="text-xl font-bold mb-8 uppercase tracking-widest border-b border-gray-300 dark:border-gray-700 pb-4 text-text dark:text-white">
+                 <h2 className="text-xl font-bold mb-8 uppercase tracking-widest border-b border-gray-200 dark:border-gray-700 pb-4 text-text dark:text-white">
                      {t({en: 'Overview', zh: '專案概覽'})}
                  </h2>
-                 <p className="text-xl md:text-2xl leading-relaxed font-light mb-16 text-gray-800 dark:text-gray-200">
+                 <p className="text-xl md:text-2xl leading-relaxed font-light mb-16 text-gray-700 dark:text-gray-200">
                      {t(project.description)}
                  </p>
                  
@@ -114,8 +114,8 @@ const ProjectDetail: React.FC = () => {
                      <div className="grid gap-8">
                         {t(project.details).map((detail: string, i: number) => (
                             <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-200 dark:border-gray-700">
-                                <span className="text-text dark:text-white font-bold text-sm mb-4 block">0{i + 1}</span>
-                                <p className="text-lg text-gray-700 dark:text-gray-200">{detail}</p>
+                                <span className="text-primary dark:text-primary font-bold text-sm mb-4 block">0{i + 1}</span>
+                                <p className="text-lg text-gray-800 dark:text-gray-100">{detail}</p>
                             </div>
                         ))}
                      </div>
@@ -124,16 +124,16 @@ const ProjectDetail: React.FC = () => {
 
              {/* Sidebar Info */}
              <div className="md:col-span-5 lg:col-span-4 space-y-12 sticky top-24 h-fit">
-                 <div className="bg-[#1C1D20] dark:bg-gray-900 rounded-3xl p-8">
+                 <div className="bg-gray-100 dark:bg-gray-900 rounded-3xl p-8">
                      <div className="mb-8">
-                         <span className="block text-xs text-gray-400 dark:text-gray-400 uppercase tracking-widest mb-2">Role</span>
-                         <p className="text-lg font-medium text-white dark:text-white">{t(project.role)}</p>
+                         <span className="block text-xs text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-2">Role</span>
+                         <p className="text-lg font-medium text-text dark:text-white">{t(project.role)}</p>
                      </div>
                      <div className="mb-8">
-                         <span className="block text-xs text-gray-400 dark:text-gray-400 uppercase tracking-widest mb-2">Tech Stack</span>
+                         <span className="block text-xs text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-2">Tech Stack</span>
                          <div className="flex flex-wrap gap-2">
                             {project.techStack.map(tech => (
-                                <span key={tech} className="bg-gray-800 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm text-gray-200 dark:text-gray-200 border border-gray-700 dark:border-gray-600">
+                                <span key={tech} className="bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600">
                                     {tech}
                                 </span>
                             ))}
@@ -141,7 +141,7 @@ const ProjectDetail: React.FC = () => {
                      </div>
                      {project.link && (
                          <a href={project.link} target="_blank" rel="noreferrer" className="block w-full">
-                             <button className="w-full bg-primary dark:bg-primary text-white py-4 rounded-full font-bold text-lg hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                             <button className="w-full bg-primary dark:bg-primary text-white py-4 rounded-full font-bold text-lg hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
                                 {t({en: 'Visit Live Site', zh: '訪問網站'})} <ExternalLink size={20} />
                              </button>
                          </a>

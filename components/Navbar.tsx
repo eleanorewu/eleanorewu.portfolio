@@ -229,8 +229,8 @@ const Navbar: React.FC = () => {
                  <div className="flex flex-col gap-2">
                     <div className="text-xs uppercase text-gray-500">Contact</div>
                     <div className="flex gap-6 text-sm font-medium text-gray-300">
-                        <a href="#" className="hover:text-white active:text-gray-400 transition-all duration-200">LinkedIn</a>
-                        <a href="#" className="hover:text-white active:text-gray-400 transition-all duration-200">GitHub</a>
+                        <a href="https://www.linkedin.com/in/eleanorewu/" className="hover:text-white active:text-gray-400 transition-all duration-200">LinkedIn</a>
+                        {/* <a href="#" className="hover:text-white active:text-gray-400 transition-all duration-200">GitHub</a> */}
                         <a href="mailto:yuenwu850823@gmail.com" className="hover:text-white active:text-gray-400 transition-all duration-200">E-mail</a>
                     </div>
                  </div>

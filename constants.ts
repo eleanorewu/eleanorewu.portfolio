@@ -6,6 +6,7 @@ export const PROJECTS: Project[] = [
     title: '查公司 (Cha Company)',
     category: 'SaaS Platform',
     thumbnail: 'https://picsum.photos/id/1/800/600',
+    period: '2024',
     role: {
       zh: '品牌識別設計 & UI 設計',
       en: 'Brand Identity & UI Design',
@@ -33,6 +34,7 @@ export const PROJECTS: Project[] = [
     title: 'Open Taipei (臺北市資料大平台)',
     category: 'Government / Open Data',
     thumbnail: 'https://picsum.photos/id/20/800/600',
+    period: '2023',
     role: {
       zh: 'UI 設計 & 前端切版',
       en: 'UI Design & Frontend',
@@ -62,6 +64,7 @@ export const PROJECTS: Project[] = [
     title: 'Scout | KYC Finance SaaS',
     category: 'FinTech / B2B',
     thumbnail: 'https://picsum.photos/id/3/800/600',
+    period: '2024',
     role: {
       zh: '介面設計',
       en: 'Interface Design',
@@ -82,52 +85,6 @@ export const PROJECTS: Project[] = [
         'Created Wireframes to optimize flow based on user data.',
         'Ensured design goals were technically feasible for launch.',
       ],
-    },
-  },
-  {
-    id: 'taiwan-empirical',
-    title: 'Taiwan Experience Empirical Survey',
-    category: 'Education / Research',
-    thumbnail: 'https://picsum.photos/id/180/800/600',
-    role: {
-      zh: 'UI 設計 & 前端',
-      en: 'UI Design & Frontend',
-    },
-    techStack: ['Vue 3', 'Nuxt 3', 'i18n'],
-    description: {
-      zh: '負責網站介面設計稿與 Prototype 製作，執行前端切版並規劃多國語系設計。',
-      en: 'Responsible for UI design, prototyping, and frontend implementation with multi-language support.',
-    },
-    details: {
-      zh: [
-        '擔任 UI 設計師，負責網站介面設計稿與 Prototype 製作。',
-        '執行前端切版 (Vue3 & Nuxt3)，確保 RWD 與設計規格落地。',
-        '規劃多國語系設計，提供可用性。',
-      ],
-      en: [
-        'Responsible for website UI design and Prototyping.',
-        'Implemented frontend (Vue3 & Nuxt3) with RWD.',
-        'Planned and implemented multi-language support.',
-      ],
-    },
-  },
-  {
-    id: 'the-f2e',
-    title: 'The F2E (喵立翰)',
-    category: 'Side Project',
-    thumbnail: 'https://picsum.photos/id/40/800/600',
-    role: {
-      zh: 'UI & 前端',
-      en: 'UI & Frontend',
-    },
-    techStack: ['React', 'Event Campaign'],
-    description: {
-      zh: 'The F2E 前端 & UI 修煉精神時光屋參賽作品 - 喵立翰競選官網。',
-      en: 'The F2E Frontend & UI Challenge entry - Meow Li-Han Election Website.',
-    },
-    details: {
-      zh: ['參與 2023 The F2E 挑戰，負責視覺設計與前端實作。'],
-      en: ['Participated in 2023 The F2E Challenge, handling visual design and frontend.'],
     },
   },
 ];
