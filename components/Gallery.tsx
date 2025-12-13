@@ -152,14 +152,14 @@ const Gallery: React.FC<GalleryProps> = ({ items }) => {
     const updateScrollDistance = () => {
       const width = window.innerWidth;
       if (width < 640) {
-        // 手機 - 減慢速度，增加觸發範圍
+        // 手機 - 減慢速度，減少容器高度避免過多留白
         setScrollDistance({ top: -200, bottom: 180 });
-        setContainerHeight('150vh');
+        setContainerHeight('60vh');
         setStickyHeight('50vh');
       } else if (width < 1024) {
-        // 平板 - 減慢速度，增加觸發範圍
+        // 平板 - 減慢速度，減少容器高度避免過多留白
         setScrollDistance({ top: -300, bottom: 280 });
-        setContainerHeight('180vh');
+        setContainerHeight('100vh');
         setStickyHeight('100vh');
       } else {
         // 桌面 - 減慢速度，增加觸發範圍

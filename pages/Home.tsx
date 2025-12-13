@@ -1,9 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { useApp } from '../context/AppContext';
-import { PROJECTS } from '../constants';
 import { ProjectShowcase } from '../components/ProjectShowcase';
 import MarqueeParallax from '../components/MarqueeParallax';
 import BackToTop from '../components/BackToTopButton';
@@ -17,8 +14,194 @@ import Gallery06 from '../src/assets/imgs/Gallery06.png';
 import Gallery07 from '../src/assets/imgs/Gallery07.png';
 import Gallery08 from '../src/assets/imgs/Gallery08.png';
 
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+// About Section Component with Scroll Animation
+const AboutSection: React.FC<{ t: (obj: any) => any }> = ({ t }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    }
+  };
+
+  return (
+    <section 
+      ref={ref}
+      id="about" 
+      className="py-24 md:py-32 px-6 md:px-12 bg-white dark:bg-[#1A1A1A] rounded-t-[3rem] relative mt-0" 
+      style={{ zIndex: 5 }}
+    >
+      <motion.div 
+        className="container mx-auto flex flex-col md:flex-row gap-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <motion.div className="md:w-1/3" variants={itemVariants}>
+          <span className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-600 border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2">
+            {t({en: 'About Me', zh: '關於我'})}
+          </span>
+        </motion.div>
+        <motion.div className="md:w-2/3" variants={itemVariants}>
+          <p className="text-2xl md:text-4xl leading-snug font-medium text-text dark:text-white mb-12">
+            {t({
+              en: "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.",
+              zh: "協助品牌在數位時代脫穎而出。我們將共同樹立新標竿。拒絕空談，始終走在設計的最前沿。"
+            })}
+          </p>
+          <motion.p 
+            className="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8"
+            variants={itemVariants}
+          >
+            {t({
+              en: "The combination of my passion for design, code & interaction positions me in a unique place in the web design world.",
+              zh: "我對設計、程式與互動的熱情，讓我在網頁設計領域佔有獨特的位置。"
+            })}
+          </motion.p>
+          <motion.a 
+            href="#contact" 
+            className="inline-flex items-center justify-center bg-text dark:bg-white text-white dark:text-background rounded-full px-8 py-4 text-base font-medium hover:scale-105 transition-transform duration-300"
+            variants={itemVariants}
+          >
+            {t({en: 'About me', zh: '更多關於我'})}
+          </motion.a>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
+// Work Section Component with Scroll Animation
+const WorkSection: React.FC<{ t: (obj: any) => any }> = ({ t }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section 
+      ref={ref}
+      id="work" 
+      className="py-16 md:py-24 px-6 md:px-12 bg-background dark:bg-background-dark"
+    >
+      <div className="container mx-auto">
+        <motion.div 
+          className="mb-16 flex items-end justify-between px-2"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        >
+          <h2 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400">
+            {t({en: 'Recent Work', zh: '近期作品'})}
+          </h2>
+        </motion.div>
+        
+        <ProjectShowcase />
+      </div>
+    </section>
+  );
+};
+
+// Footer Section Component with Scroll Animation
+const FooterSection: React.FC<{ t: (obj: any) => any; xMoveReverse: any }> = ({ t, xMoveReverse }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    }
+  };
+
+  return (
+    <section 
+      ref={ref}
+      id="contact" 
+      className="py-16 md:py-24 px-6 md:px-12 bg-[#0F0F0F] text-white rounded-t-[3rem] relative overflow-hidden"
+    >
+      <div className="container mx-auto relative z-10 flex flex-col items-center justify-center min-h-[60vh]">
+        <motion.div 
+          style={{ y: xMoveReverse }} 
+          className="flex flex-col items-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        >
+          <div className="relative border border-white/10 rounded-full p-16 md:p-24 aspect-square flex items-center justify-center group cursor-pointer overflow-hidden bg-transparent hover:border-white/30 transition-all duration-500">
+            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] rounded-full"></div>
+            <div className="relative z-10 text-center group-hover:text-black transition-colors duration-300">
+              <p className="text-sm uppercase tracking-widest text-gray-400 group-hover:text-gray-600 mb-2 transition-colors">
+                {t({en: 'Have an idea?', zh: '有想法嗎？'})}
+              </p>
+              <h2 className="text-4xl md:text-6xl font-display font-bold">
+                {t({en: 'Let\'s work', zh: '開始'})}
+                <br/>
+                {t({en: 'together', zh: '合作'})}
+              </h2>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 pt-12 border-t border-white/10"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <motion.div variants={itemVariants}>
+            <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Copyright</p>
+            <p className="text-sm">© 2025 Eleanore Wu</p>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Local Time</p>
+            <p className="text-sm">{new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })} GMT+8</p>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Contact</p>
+            <div className="flex flex-col gap-2 text-sm">
+              <a href="#" className="hover:text-gray-400 transition-colors">LinkedIn</a>
+              <a href="#" className="hover:text-gray-400 transition-colors">GitHub</a>
+              <a href="mailto:yuenwu850823@gmail.com" className="hover:text-white transition-colors">E-mail</a>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 const Home: React.FC = () => {
   const { t, theme } = useApp();
@@ -45,8 +228,6 @@ const Home: React.FC = () => {
     { id: 7, image: Gallery07, alt: 'Gallery Image 7' },
     { id: 8, image: Gallery08, alt: 'Gallery Image 8' },
   ];
-
-  // GSAP Parallax animations - 已移除圖片視差動畫，圖片固定在底部
 
   return (
     <div ref={container} className="bg-background dark:bg-background-dark min-h-screen cursor-default transition-colors duration-500">
@@ -93,46 +274,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* --- ABOUT --- */}
-      <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white dark:bg-[#1A1A1A] rounded-t-[3rem] relative mt-0" style={{ zIndex: 5 }}>
-         <div className="container mx-auto flex flex-col md:flex-row gap-16">
-             <div className="md:w-1/3">
-                 <span className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-600 border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2">
-                     {t({en: 'About Me', zh: '關於我'})}
-                 </span>
-             </div>
-             <div className="md:w-2/3">
-                 <p className="text-2xl md:text-4xl leading-snug font-medium text-text dark:text-white mb-12">
-                     {t({
-                         en: "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.",
-                         zh: "協助品牌在數位時代脫穎而出。我們將共同樹立新標竿。拒絕空談，始終走在設計的最前沿。"
-                     })}
-                 </p>
-                 <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8">
-                     {t({
-                         en: "The combination of my passion for design, code & interaction positions me in a unique place in the web design world.",
-                         zh: "我對設計、程式與互動的熱情，讓我在網頁設計領域佔有獨特的位置。"
-                     })}
-                 </p>
-                 <a 
-                   href="#contact" 
-                   className="inline-flex items-center justify-center bg-text dark:bg-white text-white dark:text-background rounded-full px-8 py-4 text-base font-medium hover:scale-105 transition-transform duration-300"
-                 >
-                     {t({en: 'About me', zh: '更多關於我'})}
-                 </a>
-             </div>
-         </div>
-      </section>
+      <AboutSection t={t} />
 
       {/* --- WORK --- */}
-      <section id="work" className="py-16 md:py-24 px-6 md:px-12 bg-background dark:bg-background-dark">
-        <div className="container mx-auto">
-             <div className="mb-16 flex items-end justify-between px-2">
-                 <h2 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400">{t({en: 'Recent Work', zh: '近期作品'})}</h2>
-             </div>
-             
-             <ProjectShowcase />
-        </div>
-      </section>
+      <WorkSection t={t} />
 
       {/* --- GALLERY --- */}
       <Gallery items={galleryItems} />
@@ -199,47 +344,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* --- FOOTER --- */}
-      <section id="contact" className="py-16 md:py-24 px-6 md:px-12 bg-[#0F0F0F] text-white rounded-t-[3rem] relative overflow-hidden">
-          <div className="container mx-auto relative z-10 flex flex-col items-center justify-center min-h-[60vh]">
-              <motion.div 
-                style={{ y: xMoveReverse }} 
-                className="flex flex-col items-center"
-              >
-                  <div className="relative border border-white/10 rounded-full p-16 md:p-24 aspect-square flex items-center justify-center group cursor-pointer overflow-hidden bg-transparent hover:border-white/30 transition-all duration-500">
-                      <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] rounded-full"></div>
-                      <div className="relative z-10 text-center group-hover:text-black transition-colors duration-300">
-                          <p className="text-sm uppercase tracking-widest text-gray-400 group-hover:text-gray-600 mb-2 transition-colors">
-                            {t({en: 'Have an idea?', zh: '有想法嗎？'})}
-                          </p>
-                          <h2 className="text-4xl md:text-6xl font-display font-bold">
-                              {t({en: 'Let\'s work', zh: '開始'})}
-                              <br/>
-                              {t({en: 'together', zh: '合作'})}
-                          </h2>
-                      </div>
-                  </div>
-              </motion.div>
-
-              <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 pt-12 border-t border-white/10">
-                  <div>
-                      <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Copyright</p>
-                      <p className="text-sm">© 2025 Eleanore Wu</p>
-                  </div>
-                  <div>
-                      <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Local Time</p>
-                      <p className="text-sm">{new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })} GMT+8</p>
-                  </div>
-                  <div>
-                      <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Contact</p>
-                      <div className="flex flex-col gap-2 text-sm">
-                          <a href="#" className="hover:text-gray-400 transition-colors">LinkedIn</a>
-                          <a href="#" className="hover:text-gray-400 transition-colors">GitHub</a>
-                          <a href="mailto:yuenwu850823@gmail.com" className="hover:text-white transition-colors">E-mail</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
+      <FooterSection t={t} xMoveReverse={xMoveReverse} />
 
       {/* Back to Top Button */}
       <BackToTop />
