@@ -98,7 +98,7 @@ const WorkSection: React.FC<{ t: (obj: any) => any }> = ({ t }) => {
     <section 
       ref={ref}
       id="work" 
-      className="py-16 md:py-24 px-6 md:px-12 bg-background dark:bg-background-dark"
+      className="py-8 px-6 md:px-12 bg-background dark:bg-background-dark"
     >
       <div className="container mx-auto">
         <motion.div 

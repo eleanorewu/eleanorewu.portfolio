@@ -6,7 +6,10 @@ interface PreloaderProps {
 }
 
 const greetings = [
-  'Hello', 'こんにちは', '안녕', 'Bonjour', '你好'
+  "Hello👋🏻",
+  "Glad you're here!",
+  "My portfolio showcase",
+  "Let's connect!"
 ];
 
 const Preloader: React.FC<PreloaderProps> = ({ setIsLoading }) => {
@@ -26,12 +29,12 @@ const Preloader: React.FC<PreloaderProps> = ({ setIsLoading }) => {
         tl.to(textRef.current, {
           opacity: 1,
           y: 0,
-          duration: 0.25,
+          duration: 0.2,
           ease: 'power2.out',
           onStart: () => setCurrentIndex(index)
         })
         .to(textRef.current, {
-          duration: 0.15
+          duration: 0.25
         })
         .to(textRef.current, {
           opacity: 0,
@@ -79,7 +82,7 @@ const Preloader: React.FC<PreloaderProps> = ({ setIsLoading }) => {
       <div className="relative">
         <h1
           ref={textRef}
-          className="text-[5vw] md:text-[3vw] font-display font-bold text-white text-center"
+          className="text-[4vw] md:text-[2vw] font-display font-bold text-white text-center"
           style={{ opacity: 0, transform: 'translateY(20px)' }}
         >
           {greetings[currentIndex]}

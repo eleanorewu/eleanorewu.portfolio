@@ -220,7 +220,7 @@ const Gallery: React.FC<GalleryProps> = ({ items }) => {
   return (
     <div 
       ref={containerRef} 
-      className="relative py-4 md:py-8 lg:py-16 bg-background dark:bg-background-dark"
+      className="relative py-4 md:py-6 lg:py-8 bg-background dark:bg-background-dark"
       style={{ minHeight: containerHeight }}
     >
       <div 
