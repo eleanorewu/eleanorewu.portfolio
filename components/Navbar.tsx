@@ -82,17 +82,16 @@ const Navbar: React.FC = () => {
             onClick={() => navigate('/')}
             className="cursor-pointer flex items-center gap-1 group text-text dark:text-white relative pointer-events-auto h-[24px]"
         >
-          {/* Copyright Symbol with Rotation */}
-          <span 
-            className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-180"
+          {/* Logo with Rotation */}
+          <img 
+            src="/logo.png"
+            alt="Logo"
+            className="inline-block mr-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-120"
             style={{
-                 fontFamily: "'Josefin Sans', sans-serif",
-                 fontSize: "20px",
-                 lineHeight: "130%",
-                 letterSpacing: "-0.72px"
-            }}>
-            ©
-          </span>
+              width: "10px",
+              height: "10px"
+            }}
+          />
           
           {/* Text Container with Slide Effect */}
           <div className="relative overflow-hidden h-[20px] flex items-center min-w-[180px]">

@@ -39,19 +39,16 @@
         color: #0F0F0F;
       }
 
-      /* Custom Scrollbar */
+      /* Custom Scrollbar - Hidden but functional */
+      /* Webkit browsers (Chrome, Safari, Edge) */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 0px;
+        display: none;
       }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #CCCCCC;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #455CE9;
+      /* Firefox, IE and Edge */
+      html {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
       
       /* Smooth Scroll Wrapper */

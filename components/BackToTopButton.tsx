@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useApp } from '../context/AppContext';
 
 interface BackToTopProps {
   text?: string;
@@ -9,7 +10,13 @@ const BackToTop: React.FC<BackToTopProps> = ({
   text = 'BACK TO TOP — ',
   size = 120 
 }) => {
+  const { theme } = useApp();
   const [isVisible, setIsVisible] = useState(false);
+  
+  // 根據主題設定顏色
+  const textColor = theme === 'dark' ? '#E1D5FD' : '#453AC2';
+  const circleBgColor = theme === 'dark' ? '#E1D5FD' : '#453AC2';
+  const arrowColor = theme === 'dark' ? '#000000' : '#FFFFFF';
 
   // 計算需要重複的次數來填滿圓周
   // 圓周長 = 2 * π * r，其中 r = 75 (SVG viewBox 中的半徑)
@@ -73,7 +80,7 @@ const BackToTop: React.FC<BackToTopProps> = ({
             />
           </defs>
           <text
-            fill="#674BD4"
+            fill={textColor}
             fontSize="16"
             fontWeight="700"
             letterSpacing="2"
@@ -94,7 +101,7 @@ const BackToTop: React.FC<BackToTopProps> = ({
             style={{
               width: '55%',
               height: '55%',
-              backgroundColor: '#674BD4'
+              backgroundColor: circleBgColor
             }}
           >
             <svg 
@@ -102,7 +109,7 @@ const BackToTop: React.FC<BackToTopProps> = ({
               height="28" 
               viewBox="0 0 24 24" 
               fill="none" 
-              stroke="white"
+              stroke={arrowColor}
               className="arrow-bounce"
               strokeWidth="2.5"
               strokeLinecap="round"

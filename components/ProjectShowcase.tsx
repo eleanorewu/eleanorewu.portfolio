@@ -50,7 +50,7 @@ export function ProjectShowcase() {
   const isDark = theme === 'dark';
 
   return (
-    <div className="flex items-center justify-center px-6 md:px-8 py-12 md:py-16 bg-background dark:bg-background-dark transition-colors duration-500">
+    <div className="flex items-center justify-center px-4 md:px-8 py-4 md:py-8">
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-10 gap-8 md:gap-12 lg:gap-16">
         {/* 左側 - 作品列表 (30%) */}
         <div className="lg:col-span-3 flex flex-col justify-center space-y-4 md:space-y-6">
