@@ -15,6 +15,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [language, setLanguage] = useState<Language>('zh');
   const [theme, setTheme] = useState<Theme>('light');
 
+  // Title translations
+  const titleTranslations = {
+    zh: "Eleanore's 作品集",
+    en: "Eleanore's Portfolio"
+  };
+
   // Load saved preferences
   useEffect(() => {
     const savedLang = localStorage.getItem('lang') as Language;
@@ -29,6 +35,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  // Update document title when language changes
+  useEffect(() => {
+    document.title = titleTranslations[language];
+  }, [language]);
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang);
