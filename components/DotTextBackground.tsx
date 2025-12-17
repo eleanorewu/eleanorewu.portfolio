@@ -20,8 +20,15 @@ const DotTextBackground: React.FC<DotTextBackgroundProps> = ({ text, containerRe
 
   // 視差效果：背景文字向上移動，速度比前景慢（更明顯的視差效果）
   // 參考網站中，背景文字移動速度明顯慢於前景
-  const y = useTransform(scrollYProgress, [0, 1], [0, -300]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.9, 0.4]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.9, 0.4]);
+  
+  // 進場動畫狀態
+  const [isVisible, setIsVisible] = React.useState(false);
+  
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -64,14 +71,16 @@ const DotTextBackground: React.FC<DotTextBackgroundProps> = ({ text, containerRe
 
       const fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
       
-      // 計算合適的字體大小，根據螢幕大小調整最大寬度
-      // 手機版可以佔畫面85%，桌機版佔60%
+      // 計算合適的字體大小，最大寬度為 1280px（但不超過畫面寬度）
       const isMobile = width < 768; // md breakpoint
       const maxTextWidthRatio = isMobile ? 0.85 : 0.6;
-      const maxTextWidth = width * maxTextWidthRatio;
+      const maxTextWidth = Math.min(1280, width * maxTextWidthRatio);
       
       // 先使用一個初始字體大小來測量文字寬度
-      let fontSize = Math.max(36, Math.min(150, width * 0.12));
+      // 桌機版使用更大的字體倍數和最大限制
+      const fontSizeMultiplier = isMobile ? 0.12 : 0.15;
+      const maxFontSize = isMobile ? 150 : 180;
+      let fontSize = Math.max(36, Math.min(maxFontSize, width * fontSizeMultiplier));
       
       // 創建臨時 context 來測量文字寬度
       const measureCtx = document.createElement('canvas').getContext('2d');
@@ -91,7 +100,7 @@ const DotTextBackground: React.FC<DotTextBackgroundProps> = ({ text, containerRe
         if (maxLineWidth > maxTextWidth) {
           fontSize = (fontSize * maxTextWidth) / maxLineWidth;
           // 確保字體大小在合理範圍內
-          fontSize = Math.max(36, Math.min(fontSize, 150));
+          fontSize = Math.max(36, Math.min(fontSize, maxFontSize));
         }
       }
       
@@ -185,28 +194,38 @@ const DotTextBackground: React.FC<DotTextBackgroundProps> = ({ text, containerRe
 
   return (
     <motion.div
-      ref={wrapperRef}
+      initial={{ opacity: 0, y: -35 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -35 }}
+      transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0 }}
       style={{
-        y,
-        opacity,
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 1, // 降低 z-index，確保不會遮擋背景色
+        zIndex: 1,
         pointerEvents: 'none',
         overflow: 'hidden'
       }}
     >
-      <canvas
-        ref={canvasRef}
+      <motion.div
+        ref={wrapperRef}
         style={{
+          y: parallaxY,
+          opacity: parallaxOpacity,
           width: '100%',
-          height: '100%',
-          display: 'block'
+          height: '100%'
         }}
-      />
+      >
+        <canvas
+          ref={canvasRef}
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'block'
+          }}
+        />
+      </motion.div>
     </motion.div>
   );
 };

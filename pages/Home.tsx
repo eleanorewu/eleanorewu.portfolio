@@ -279,16 +279,22 @@ const Home: React.FC = () => {
                 src="/src/assets/imgs/hero.png" 
                 alt="Eleanore Wu" 
                 className="w-full h-full object-cover object-bottom"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+                initial={{ y: -20 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
             />
         </div>
         
         {/* Marquee at bottom of Hero */}
-        <div className="w-full absolute bottom-0 left-0 overflow-hidden md:overflow-visible" style={{ zIndex: 30, height: 'auto' }}>
+        <motion.div 
+          className="w-full absolute bottom-0 left-0 overflow-hidden md:overflow-visible" 
+          style={{ zIndex: 30, height: 'auto' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
+        >
           <MarqueeParallax text="UIUX Designer" speed={2} theme={theme} />
-        </div>
+        </motion.div>
       </section>
 
       {/* --- ABOUT --- */}

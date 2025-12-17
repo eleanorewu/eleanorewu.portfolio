@@ -73,7 +73,16 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="fixed top-5 left-0 w-full z-[60] flex justify-center pointer-events-none px-4 sm:px-5">
+      <motion.div 
+        className="fixed top-5 left-0 w-full z-[60] flex justify-center pointer-events-none px-4 sm:px-5"
+        initial={{ opacity: 0, y: -40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 1.6, 
+          ease: [0.25, 0.1, 0.25, 1],
+          delay: 0.3
+        }}
+      >
         <div className={`w-full max-w-[1280px] h-[72px] px-4 sm:px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
           isScrolled ? 'rounded-full backdrop-blur-md' : ''
         }`}>
@@ -172,7 +181,7 @@ const Navbar: React.FC = () => {
             </Magnetic>
         </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Full Screen Menu */}
       <AnimatePresence mode="wait">
