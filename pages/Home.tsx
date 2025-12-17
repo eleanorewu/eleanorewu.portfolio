@@ -255,8 +255,8 @@ const Home: React.FC = () => {
         {/* Dot Text Background - Behind the hero image */}
         <DotTextBackground 
           text={[
-            "design & strategy",
-            "with staying power."
+            "design with empathy",
+            "strategy with influence"
           ]}
           containerRef={heroSectionRef}
           theme={theme}
