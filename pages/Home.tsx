@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { ProjectShowcase } from '../components/ProjectShowcase';
 import MarqueeParallax from '../components/MarqueeParallax';
 import BackToTop from '../components/BackToTopButton';
 import Gallery from '../components/Gallery';
+import DotTextBackground from '../components/DotTextBackground';
 import Gallery01 from '../src/assets/imgs/Gallery01.png';
 import Gallery02 from '../src/assets/imgs/Gallery02.png';
 import Gallery03 from '../src/assets/imgs/Gallery03.png';
@@ -207,6 +208,7 @@ const Home: React.FC = () => {
   const { t, theme } = useApp();
   const container = useRef(null);
   const heroImageRef = useRef<HTMLDivElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
   
   // Parallax Text
   const { scrollYProgress } = useScroll({
@@ -229,25 +231,41 @@ const Home: React.FC = () => {
     { id: 8, image: Gallery08, alt: 'Gallery Image 8' },
   ];
 
+  // 確保 Hero Section 有正確的 data 屬性
+  useEffect(() => {
+    if (heroSectionRef.current) {
+      heroSectionRef.current.setAttribute('data-hero-section', 'true');
+    }
+  }, []);
+
   return (
-    <div ref={container} className="bg-background dark:bg-background-dark min-h-screen cursor-default transition-colors duration-500">
+    <div ref={container} className="min-h-screen cursor-default transition-colors duration-500">
       
       {/* --- HERO --- */}
       <section 
-        className="h-[75vh] md:h-[85vh] lg:h-screen relative" 
+        ref={heroSectionRef}
+        data-hero-section="true"
+        className="h-[80vh] md:h-[85vh] lg:h-screen relative overflow-hidden md:overflow-visible" 
         style={{ 
-          overflow: 'visible',
-          background: theme === 'dark' 
-            ? 'linear-gradient(180deg, #272727 0%, #E5E5E5 100%)'
-            : 'linear-gradient(180deg, #E5E5E5 0%, #4B4B4B 100%)',
           padding: 0,
-          margin: 0
+          margin: 0,
+          position: 'relative'
         }}
       >
+        {/* Dot Text Background - Behind the hero image */}
+        <DotTextBackground 
+          text={[
+            "design & strategy",
+            "with staying power."
+          ]}
+          containerRef={heroSectionRef}
+          theme={theme}
+        />
+        
         {/* Hero Image - Centered and Bottom Aligned */}
         <div 
             ref={heroImageRef}
-            className="absolute w-[300px] md:w-[480px] lg:w-[600px] aspect-[2/3] md:aspect-[4/5] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden"
+            className="absolute w-[300px] md:w-[480px] lg:w-[480px] aspect-[2/3] md:aspect-[4/5] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden"
             style={{ 
               left: '50%',
               bottom: 0,
@@ -268,8 +286,8 @@ const Home: React.FC = () => {
         </div>
         
         {/* Marquee at bottom of Hero */}
-        <div className="w-full absolute bottom-0 left-0" style={{ zIndex: 30, height: 'auto' }}>
-          <MarqueeParallax text="UIUX Designer" speed={2} />
+        <div className="w-full absolute bottom-0 left-0 overflow-hidden md:overflow-visible" style={{ zIndex: 30, height: 'auto' }}>
+          <MarqueeParallax text="UIUX Designer" speed={2} theme={theme} />
         </div>
       </section>
 

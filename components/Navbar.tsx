@@ -73,8 +73,8 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="fixed top-5 left-0 w-full z-[60] flex justify-center pointer-events-none px-5">
-        <div className={`w-full max-w-[1280px] h-[72px] px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
+      <div className="fixed top-5 left-0 w-full z-[60] flex justify-center pointer-events-none px-4 sm:px-5">
+        <div className={`w-full max-w-[1280px] h-[72px] px-4 sm:px-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
           isScrolled ? 'rounded-full backdrop-blur-md' : ''
         }`}>
         {/* Logo - Acts as Home Button */}

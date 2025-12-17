@@ -5,12 +5,14 @@ interface MarqueeParallaxProps {
   text: string;
   reverse?: boolean;
   speed?: number;
+  theme?: 'light' | 'dark';
 }
 
 const MarqueeParallax: React.FC<MarqueeParallaxProps> = ({ 
   text, 
   reverse = false,
-  speed = 1
+  speed = 1,
+  theme = 'light'
 }) => {
   const containerRef = useRef(null);
   
@@ -27,10 +29,10 @@ const MarqueeParallax: React.FC<MarqueeParallaxProps> = ({
   );
 
   return (
-    <div ref={containerRef} className="w-full whitespace-nowrap py-4 relative" style={{ overflow: 'visible', zIndex: 50 }}>
+    <div ref={containerRef} className="w-full whitespace-nowrap py-2 sm:py-4 relative overflow-hidden md:overflow-visible" style={{ zIndex: 50 }}>
       <motion.div
         style={{ x }}
-        className="flex gap-8 md:gap-12 relative"
+        className="flex gap-4 sm:gap-8 md:gap-12 relative"
       >
         {/* 重複文字以創造無縫效果 */}
         {[...Array(4)].map((_, index) => (
@@ -43,12 +45,13 @@ const MarqueeParallax: React.FC<MarqueeParallaxProps> = ({
             }}
           >
             <span 
-              className="text-[15vw] md:text-[12vw] font-display font-bold text-white tracking-tighter inline-block" 
+              className="text-[10vw] sm:text-[12vw] md:text-[12vw] font-display font-bold tracking-tighter inline-block"
               style={{ 
                 display: 'inline-block',
                 verticalAlign: 'baseline',
                 overflow: 'visible',
-                lineHeight: '1.3'
+                lineHeight: '1.3',
+                color: theme === 'dark' ? '#7965EC' : '#8C7EEB'
               }}
             >
               {text}

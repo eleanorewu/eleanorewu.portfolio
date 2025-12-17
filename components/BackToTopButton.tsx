@@ -46,10 +46,36 @@ const BackToTop: React.FC<BackToTopProps> = ({
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    const startPosition = window.pageYOffset;
+    const startTime = performance.now();
+    
+    // 滾動持續時間（毫秒），可以調整這個值來控制速度
+    const duration = 1200; // 1.2秒，比預設的 smooth 更慢更平滑
+    
+    // Easing 函數：ease-in-out-cubic，提供更自然的加速和減速
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+    
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // 使用 easing 函數計算當前位置
+      const ease = easeInOutCubic(progress);
+      const currentPosition = startPosition * (1 - ease);
+      
+      window.scrollTo(0, currentPosition);
+      
+      // 如果還沒到達頂部，繼續動畫
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+    
+    requestAnimationFrame(animateScroll);
   };
 
   return (

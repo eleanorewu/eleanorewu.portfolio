@@ -114,4 +114,15 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* Hero Section 背景色 - 使用 data 屬性確保優先級 */
+  section[data-hero-section="true"] {
+    background-color: #E3E3E3 !important;
+    background: #E3E3E3 !important;
+  }
+
+  html.dark section[data-hero-section="true"] {
+    background-color: #1F1F1F !important;
+    background: #1F1F1F !important;
+  }
 }
