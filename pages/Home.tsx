@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { ProjectShowcase } from '../components/ProjectShowcase';
 import MarqueeParallax from '../components/MarqueeParallax';
@@ -210,6 +210,18 @@ const Home: React.FC = () => {
   const heroImageRef = useRef<HTMLDivElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
   
+  // Mouse Parallax for Hero Image
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 50, stiffness: 100 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+  
+  // Transform values for parallax effect
+  const rotateX = useTransform(y, [-30, 30], [3, -3]);
+  const rotateY = useTransform(x, [-30, 30], [-3, 3]);
+  
   // Parallax Text
   const { scrollYProgress } = useScroll({
     target: container,
@@ -238,6 +250,45 @@ const Home: React.FC = () => {
     }
   }, []);
 
+  // Mouse parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroSectionRef.current) return;
+      
+      const rect = heroSectionRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      // 計算鼠標相對於中心點的位置 (-1 到 1)
+      const relativeX = (e.clientX - centerX) / (rect.width / 2);
+      const relativeY = (e.clientY - centerY) / (rect.height / 2);
+      
+      // 設置視差移動距離（可調整強度）
+      const parallaxStrength = 30;
+      mouseX.set(relativeX * parallaxStrength);
+      mouseY.set(relativeY * parallaxStrength);
+    };
+
+    const handleMouseLeave = () => {
+      // 鼠標離開時回到中心位置
+      mouseX.set(0);
+      mouseY.set(0);
+    };
+
+    const heroSection = heroSectionRef.current;
+    if (heroSection) {
+      heroSection.addEventListener('mousemove', handleMouseMove);
+      heroSection.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return () => {
+      if (heroSection) {
+        heroSection.removeEventListener('mousemove', handleMouseMove);
+        heroSection.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [mouseX, mouseY]);
+
   return (
     <div ref={container} className="min-h-screen cursor-default transition-colors duration-500">
       
@@ -263,27 +314,34 @@ const Home: React.FC = () => {
         />
         
         {/* Hero Image - Centered and Bottom Aligned */}
-        <div 
-            ref={heroImageRef}
-            className="absolute w-[300px] md:w-[480px] lg:w-[480px] aspect-[2/3] md:aspect-[4/5] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden"
+        <motion.div
+            className="absolute left-1/2 bottom-0 -translate-x-1/2"
             style={{ 
-              left: '50%',
-              bottom: 0,
-              transform: 'translateX(-50%)',
-              marginBottom: 0,
-              padding: 0,
-              zIndex: 20
+              zIndex: 20,
             }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
         >
-            <motion.img 
-                src="/src/assets/imgs/hero.png" 
-                alt="Eleanore Wu" 
-                className="w-full h-full object-cover object-bottom"
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
-            />
-        </div>
+            <motion.div 
+                ref={heroImageRef}
+                className="w-[300px] md:w-[480px] lg:w-[480px] aspect-[2/3] md:aspect-[4/5] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden"
+                style={{ 
+                  x,
+                  y,
+                  rotateX,
+                  rotateY,
+                  transformStyle: 'preserve-3d',
+                  transformPerspective: 1000,
+                }}
+            >
+                <motion.img 
+                    src="/src/assets/imgs/hero.png" 
+                    alt="Eleanore Wu" 
+                    className="w-full h-full object-cover object-bottom"
+                />
+            </motion.div>
+        </motion.div>
         
         {/* Marquee at bottom of Hero */}
         <motion.div 
