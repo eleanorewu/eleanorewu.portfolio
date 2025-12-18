@@ -79,8 +79,15 @@ const DotTextBackground: React.FC<DotTextBackgroundProps> = ({ text, containerRe
       // 先使用一個初始字體大小來測量文字寬度
       // 桌機版使用更大的字體倍數和最大限制
       const fontSizeMultiplier = isMobile ? 0.12 : 0.15;
-      const maxFontSize = isMobile ? 150 : 180;
+      const maxFontSize = isMobile ? 150 : 243; // 桌機版放大1.35倍，所以180 * 1.35 = 243
       let fontSize = Math.max(36, Math.min(maxFontSize, width * fontSizeMultiplier));
+      
+      // 桌機版將字體大小放大1.35倍
+      if (!isMobile) {
+        fontSize = fontSize * 1.35;
+        // 確保不超過最大字體大小
+        fontSize = Math.min(fontSize, maxFontSize);
+      }
       
       // 創建臨時 context 來測量文字寬度
       const measureCtx = document.createElement('canvas').getContext('2d');

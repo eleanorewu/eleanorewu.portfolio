@@ -351,7 +351,7 @@ const Home: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
         >
-          <MarqueeParallax text="UIUX Designer" speed={2} theme={theme} />
+          <MarqueeParallax text="UIUX Designer" speed={1} theme={theme} />
         </motion.div>
       </section>
 
